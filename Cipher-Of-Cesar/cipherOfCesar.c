@@ -9,6 +9,7 @@ char * cipher(char *msg, int k){
         int end;
     } interval;
 
+    int witness = 0;
     int cpt = 0;
     interval intervals[3];
 
@@ -23,15 +24,16 @@ char * cipher(char *msg, int k){
 
         if((msg[cpt] >= intervals[0].start && msg[cpt] <= intervals[0].end)){ // char between [a-z]
             msg[cpt] %= intervals[0].start;
+            witness = 1;
         } else if(msg[cpt] >= intervals[1].start && msg[cpt] <= intervals[1].end){ // char between [A-Z]
             msg[cpt] %= intervals[1].start;
+            witness = 1;
         } else if(msg[cpt] >= intervals[2].start && msg[cpt] <= intervals[2].end){ // char between [0-9]
             msg[cpt] %= intervals[2].start;
+            witness = 1;
         }
 
-        if((msg[cpt] >= intervals[0].start && msg[cpt] <= intervals[0].end) ||
-            (msg[cpt] >= intervals[1].start && msg[cpt] <= intervals[1].end) || 
-            (msg[cpt] >= intervals[2].start && msg[cpt] <= intervals[2].end)){
+        if(witness == 1){
         
             msg[cpt] = (msg[cpt] + k) % 62;
 
@@ -46,7 +48,8 @@ char * cipher(char *msg, int k){
                 msg[cpt] += intervals[2].start;
             }
         }
-        
+
+        witness = 0;
         cpt++;
     }while(msg[cpt] != '\0');
 
@@ -55,12 +58,13 @@ char * cipher(char *msg, int k){
 
 int main(int argc, char *argv[]){
 
+    char *result;
     char msg[100];
-    char msg2[100];
+    char msg0[100];
     char response[100] = "yes";
     char default_value[100] = "yes";
     int K;
-    
+
     while(strcmp(response, default_value) == 0){
 
         printf("Enter The Value Of K (0, 2^32-1) : ");
@@ -69,13 +73,14 @@ int main(int argc, char *argv[]){
         printf("Enter The Message To Encrypt : ");
         scanf("%s", msg);
         
-        strcpy(msg2, msg);
+        strcpy(msg0, msg);
         cipher(msg, K);
 
-        printf("%s => %s\n\n", msg2, msg);
+        printf("%s => %s\n\n", msg0, msg);
+
         printf("Did You Want To Continue To Encrypt Message? (yes | no) : ");
         scanf("%s", response);
-        printf("\n\n");
+        printf("\n");
         // printf("%lu\n", strlen(result));
     }
 
