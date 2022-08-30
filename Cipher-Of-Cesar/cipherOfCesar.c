@@ -58,7 +58,7 @@ char * cipher(char *msg, int k){
 
 int main(int argc, char *argv[]){
 
-    char *result;
+
     char msg[100];
     char msg0[100];
     char response[100] = "yes";
