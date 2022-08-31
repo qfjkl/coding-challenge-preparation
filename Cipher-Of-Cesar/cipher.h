@@ -1,0 +1,3 @@
+#define ALL_CHARS_NUMBER 62
+#define NUMBER_DIGITS 10
+#define NUMBER_LETTER 26
