@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include "cipherOfCesar.h"
 
 
@@ -15,8 +16,18 @@ int main(int argc, char *argv[]){
         char toStop[100];
     } responses;
 
-    responses default_response[2];
+    responses default_response[2] = {0};
 
+    int *var = NULL;
+    var = malloc(sizeof(int));
+
+    if(var == NULL){
+        exit(0);
+    } 
+    *var = 57896;
+
+    printf("%d\n", *var);
+    free(var);
     strcpy(default_response[0].toContinue, "yes");
     strcpy(default_response[1].toContinue, "y");
 
